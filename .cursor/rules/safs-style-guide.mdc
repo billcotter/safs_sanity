@@ -1,0 +1,215 @@
+---
+description: 'Comprehensive style guide for the St. Augustine Film Society (SAFS), covering branding, visual identity (colors, typography, icons), and content guidelines.'
+globs: ['**/*'] # Apply this rule to all files in the project
+alwaysApply: true # Always include this rule in the AI's context
+---
+
+# Style Guide: St. Augustine Film Society
+
+---
+
+# St. Augustine Film Society (SAFS) - Cursor Rules
+
+# Project: Film Society Website with Next.js 15 + Sanity + TypeScript
+
+# Brand Guidelines Implementation
+
+## Project Context
+
+This is a Next.js 15 website for St. Augustine Film Society, a cultural institution focused on independent cinema. The project uses Sanity CMS for content management, TypeScript for type safety, and Tailwind CSS for styling. The design should reflect the historic charm of St. Augustine while maintaining modern web standards.
+
+## Technical Stack
+
+- Next.js 15 with App Router
+- TypeScript (strict mode)
+- Sanity CMS with embedded studio
+- Tailwind CSS v3 (stable)
+- pnpm package manager
+- TMDB API integration for film data
+
+## Brand Color Palette (STRICT ADHERENCE REQUIRED)
+
+### Primary Colors
+
+- **Sandstone**: #F7F2E6 (RGB: 247,242,230) - Main backgrounds, light sections, text on dark
+- **Terracotta**: #BF5B3D (RGB: 191,91,61) - Hero sections, CTAs, warm accents
+- **Ocean Blue**: #2B5B7D (RGB: 43,91,125) - Featured films, icons, navigation, links
+- **Ochre**: #E3A85B (RGB: 227,168,91) - Star ratings, awards, subtle highlights
+- **Charcoal**: #333333 (RGB: 51,51,51) - Primary text, dark sections
+
+### Tailwind Config Colors
+
+```css
+colors: {
+  sandstone: {
+    DEFAULT: '#F7F2E6',
+    light: '#FDFCF8',
+    dark: '#EDE6D6',
+  },
+  terracotta: {
+    DEFAULT: '#BF5B3D',
+    light: '#D4704A',
+    dark: '#A04A28',
+  },
+  'ocean-blue': {
+    DEFAULT: '#2B5B7D',
+    light: '#4A7BA7',
+    dark: '#1E4259',
+  },
+  ochre: {
+    DEFAULT: '#E3A85B',
+    light: '#F0C888',
+    dark: '#C6883A',
+  },
+  charcoal: {
+    DEFAULT: '#333333',
+    light: '#4D4D4D',
+    dark: '#1A1A1A',
+  }
+}
+```
+
+## Color Usage Guidelines
+
+- **PRIMARY BACKGROUNDS**: Always use Sandstone (#F7F2E6)
+- **PRIMARY TEXT**: Always use Charcoal (#333333) on light backgrounds
+- **HERO SECTIONS**: Use Terracotta (#BF5B3D) for prominence
+- **FEATURED CONTENT**: Use Ocean Blue (#2B5B7D) for films, icons, navigation
+- **RATINGS/AWARDS**: Use Ochre (#E3A85B) exclusively for star ratings and awards
+- **NEVER** use colors outside this palette without explicit approval
+
+## Typography Guidelines
+
+- **Headings**: Playfair Display or similar classic serif (font-display)
+- **Body Text**: Inter or similar readable sans-serif (font-body)
+- **Film Titles**: Always italicized in content
+- **Responsive Sizing**: Mobile-first approach with proper hierarchy
+
+## Component Architecture
+
+- Use TypeScript interfaces for all props
+- Implement proper error boundaries
+- Follow Next.js 15 App Router patterns
+- Use Sanity's GROQ for data fetching
+- Ensure mobile-first responsive design
+
+## Content Guidelines
+
+- **Film Titles**: Italicized, include director and year on first mention
+- **Dates**: Format as "August 15, 2025 at 7:00 PM EDT"
+- **Numbers**: Spell out 1-9, use numerals for 10+
+- **Grammar**: American English with Oxford comma
+- **Accessibility**: Alt text for all images, proper contrast ratios
+
+## Icon System (Lucide React)
+
+### Navigation Icons
+
+- **Play**: Film screenings, trailers, video content (color: ocean-blue)
+- **Heart**: Favorites, likes, saving content (color: terracotta)
+- **Ticket**: Ticket purchases, events (color: ochre)
+- **Users**: Membership, community (color: ocean-blue)
+
+### Content Icons
+
+- **Film**: Movie details, collections (color: ocean-blue)
+- **Star**: Ratings, reviews (color: ochre)
+- **Camera**: Behind-scenes, director profiles (color: ocean-blue)
+- **BookOpen**: Articles, blog posts (color: charcoal)
+- **Award**: Festival awards, recognition (color: ochre)
+
+### Contact Icons
+
+- **MapPin**: Venue locations (color: terracotta)
+- **Phone**: Contact numbers (color: charcoal)
+- **Mail**: Email addresses (color: charcoal)
+- **Home**: Address, main page (color: ocean-blue)
+
+## Coding Standards
+
+- Use strict TypeScript with no implicit any
+- Implement proper error handling and loading states
+- Follow React best practices (hooks, component composition)
+- Use async/await for API calls
+- Implement proper SEO with Next.js metadata API
+- Ensure WCAG AA accessibility compliance
+
+## File Structure Conventions
+
+```
+src/
+├── app/                 # Next.js 15 App Router
+├── components/
+│   ├── ui/             # Reusable UI components
+│   ├── sanity/         # Sanity-specific components
+│   └── forms/          # Form components
+├── lib/
+│   ├── sanity.ts       # Sanity client configuration
+│   ├── tmdb.ts         # TMDB API functions
+│   └── utils.ts        # Utility functions
+├── types/              # TypeScript type definitions
+└── styles/             # Global styles and Tailwind config
+```
+
+## Sanity Schema Guidelines
+
+- Use proper TypeScript interfaces for schema types
+- Implement validation rules for required fields
+- Use descriptive field names and help text
+- Create meaningful preview configurations
+- Implement proper references between content types
+
+## Performance Requirements
+
+- Core Web Vitals optimization
+- Image optimization with Next.js Image component
+- Lazy loading for below-fold content
+- Proper caching strategies for Sanity content
+- Mobile performance prioritization
+
+## Brand Voice & Messaging
+
+- **Tone**: Sophisticated, welcoming, culturally aware
+- **Audience**: Film enthusiasts, cultural tourists, local community
+- **Mission**: Celebrate independent cinema in historic St. Augustine
+- **Values**: Cultural enrichment, community engagement, artistic excellence
+
+## St. Augustine Context
+
+- Reference historic charm and Spanish colonial architecture
+- Incorporate coastal Florida elements (without beach clichés)
+- Maintain cultural institution gravitas
+- Appeal to both locals and cultural tourists
+- Respect the city's heritage while embracing modern cinema
+
+## Error Handling Patterns
+
+- Graceful fallbacks for missing content
+- Proper loading states with brand-appropriate styling
+- User-friendly error messages in brand voice
+- Offline functionality considerations
+
+## SEO & Analytics
+
+- Implement structured data for films and events
+- Use semantic HTML for better accessibility
+- Meta tags optimized for film society content
+- Google Analytics 4 integration
+- Performance monitoring
+
+## Testing Guidelines
+
+- Component testing with proper props validation
+- API integration testing for Sanity and TMDB
+- Accessibility testing with screen readers
+- Cross-browser compatibility testing
+- Mobile responsiveness validation
+
+## Deployment & Environment
+
+- Use environment variables for API keys and secrets
+- Implement proper staging/production workflows
+- Monitor Core Web Vitals in production
+- Set up proper error logging and monitoring
+
+ALWAYS prioritize the brand color palette, accessibility, and user experience. This is both a functional website and a portfolio project demonstrating modern content management and web development skills.

@@ -1,26 +1,121 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f2e6;
+  --foreground: #333333;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* SAFS Color Palette */
+@layer base {
+  :root {
+    --sandstone: #f7f2e6;
+    --sandstone-dark: #e8e0d0;
+    --charcoal: #333333;
+    --charcoal-light: #4a4a4a;
+    --ocean-blue: #2b5b7d;
+    --ocean-blue-dark: #1e3f5a;
+    --terracotta: #bf5b3d;
+    --terracotta-dark: #a04a2f;
+    --ochre: #e3a85b;
+    --cream: #fdfcf8;
+  }
+}
+
+/* Film Detail Grid Layout */
+@layer components {
+  .film-detail-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+    grid-template-areas:
+      'poster plot'
+      'cast cast'
+      'trailer trailer';
+  }
+
+  .poster-meta-column {
+    grid-area: poster;
+  }
+
+  .plot-synopsis-column {
+    grid-area: plot;
+  }
+
+  .cast-crew-section {
+    grid-area: cast;
+  }
+
+  .trailer-section {
+    grid-area: trailer;
+  }
+
+  /* Person Detail Grid Layout */
+  .person-detail-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+  }
+
+  .person-bio-column {
+    grid-column: 1;
+  }
+
+  .person-filmography-column {
+    grid-column: 2;
+  }
+
+  /* Responsive Grid Layout */
+  @media (max-width: 1023px) {
+    .film-detail-grid {
+      grid-template-columns: 250px 1fr;
+      grid-template-areas:
+        'poster plot'
+        'cast cast'
+        'trailer trailer';
+    }
+
+    .person-detail-grid {
+      grid-template-columns: 250px 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .film-detail-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'poster'
+        'plot'
+        'cast'
+        'trailer';
+    }
+
+    .person-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .person-bio-column {
+      grid-column: 1;
+    }
+
+    .person-filmography-column {
+      grid-column: 1;
+    }
+  }
 }

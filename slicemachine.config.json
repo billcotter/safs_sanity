@@ -1,0 +1,5 @@
+{
+  "repositoryName": "safs-cms",
+  "adapter": "@slicemachine/adapter-next",
+  "libraries": ["./src/slices"]
+}
