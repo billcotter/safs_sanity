@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -55,6 +56,14 @@ export default function PurchasePage({ searchParams }: PurchasePageProps) {
       />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs
+          items={[
+            { label: 'Films', href: '/films' },
+            { label: movieData.title, href: `/film/${movieData.id}` },
+            { label: 'Purchase Tickets' },
+          ]}
+        />
+
         {/* Movie Details - Strapi Content */}
         <div className="mb-8 p-6 bg-sandstone/30 rounded-lg shadow-sm">
           <h2 className="text-xl font-serif font-bold text-charcoal mb-3">

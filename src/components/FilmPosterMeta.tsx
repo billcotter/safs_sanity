@@ -3,7 +3,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { urlForImage } from '@/lib/sanity'
-import { tmdbService } from '@/lib/tmdb'
+
 import { Calendar, Clock, MapPin, Star, Ticket } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -23,7 +23,7 @@ export function FilmPosterMeta({
   let posterUrl = '/api/placeholder/300/450'
 
   if (tmdbData?.poster) {
-    posterUrl = tmdbService.getPosterUrl(tmdbData.poster, 'w500')
+    posterUrl = tmdbData.poster || '/placeholder-poster.jpg'
   } else if (film.poster) {
     // Check if it's a Sanity asset (has _ref) or regular URL
     if (typeof film.poster === 'object' && film.poster._ref) {
@@ -164,7 +164,7 @@ export function FilmPosterMeta({
               {/* Purchase Ticket Button */}
               <Button
                 size="sm"
-                className="bg-ocean-blue hover:bg-ocean-blue/90 text-white font-semibold w-full"
+                className="bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold w-full transition-colors duration-200"
                 asChild
               >
                 <Link

@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -24,6 +25,8 @@ export default function MembershipPage() {
       />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs items={[{ label: 'Membership' }]} />
+
         {/* Membership Benefits with St. Augustine Context */}
         <div className="mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -94,14 +97,14 @@ export default function MembershipPage() {
           <h2 className="text-2xl font-serif font-bold text-charcoal mb-6 text-center">
             Choose Your Membership Level
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="bg-white shadow-lg border border-sandstone/30 hover:shadow-xl transition-shadow">
               <div className="p-6">
                 <h3 className="text-xl font-bold text-charcoal mb-2">
                   Individual
                 </h3>
                 <div className="text-3xl font-bold text-ocean-blue mb-4">
-                  $45<span className="text-lg text-charcoal/60">/year</span>
+                  $50<span className="text-lg text-charcoal/60">/year</span>
                 </div>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center gap-2 text-sm text-charcoal/70">
@@ -121,9 +124,14 @@ export default function MembershipPage() {
                     Member-only events
                   </li>
                 </ul>
-                <Button className="w-full bg-ocean-blue hover:bg-ocean-blue-dark">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Join Now
+                <Button
+                  className="w-full bg-ocean-blue hover:bg-ocean-blue-dark"
+                  asChild
+                >
+                  <Link href="/membership/signup">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Join Now
+                  </Link>
                 </Button>
               </div>
             </Card>
@@ -135,7 +143,7 @@ export default function MembershipPage() {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-charcoal mb-2">Family</h3>
                 <div className="text-3xl font-bold text-ocean-blue mb-4">
-                  $75<span className="text-lg text-charcoal/60">/year</span>
+                  $85<span className="text-lg text-charcoal/60">/year</span>
                 </div>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center gap-2 text-sm text-charcoal/70">
@@ -155,9 +163,14 @@ export default function MembershipPage() {
                     Family movie nights
                   </li>
                 </ul>
-                <Button className="w-full bg-ocean-blue hover:bg-ocean-blue-dark">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Join Now
+                <Button
+                  className="w-full bg-ocean-blue hover:bg-ocean-blue-dark"
+                  asChild
+                >
+                  <Link href="/membership/signup">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Join Now
+                  </Link>
                 </Button>
               </div>
             </Card>
@@ -186,9 +199,53 @@ export default function MembershipPage() {
                     Recognition in programs
                   </li>
                 </ul>
-                <Button className="w-full bg-ocean-blue hover:bg-ocean-blue-dark">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  Join Now
+                <Button
+                  className="w-full bg-ocean-blue hover:bg-ocean-blue-dark"
+                  asChild
+                >
+                  <Link href="/membership/signup">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Join Now
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="bg-white shadow-lg border border-sandstone/30 hover:shadow-xl transition-shadow">
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-charcoal mb-2">
+                  Lifetime
+                </h3>
+                <div className="text-3xl font-bold text-ocean-blue mb-4">
+                  $500
+                  <span className="text-lg text-charcoal/60"> one-time</span>
+                </div>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center gap-2 text-sm text-charcoal/70">
+                    <Star className="h-4 w-4 text-ocean-blue" />
+                    All Patron benefits
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-charcoal/70">
+                    <Star className="h-4 w-4 text-ocean-blue" />
+                    Lifetime membership
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-charcoal/70">
+                    <Star className="h-4 w-4 text-ocean-blue" />
+                    Founding member status
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-charcoal/70">
+                    <Star className="h-4 w-4 text-ocean-blue" />
+                    Special recognition
+                  </li>
+                </ul>
+                <Button
+                  className="w-full bg-ocean-blue hover:bg-ocean-blue-dark"
+                  asChild
+                >
+                  <Link href="/membership/signup">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Join Now
+                  </Link>
                 </Button>
               </div>
             </Card>
@@ -308,7 +365,7 @@ export default function MembershipPage() {
               size="lg"
               className="bg-ocean-blue hover:bg-ocean-blue-dark"
             >
-              <Link href="/signup">
+              <Link href="/membership/signup">
                 <Heart className="mr-2 h-5 w-5" />
                 Become a Member
               </Link>

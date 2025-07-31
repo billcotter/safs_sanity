@@ -1,5 +1,6 @@
 'use client'
 
+import { Breadcrumbs } from './Breadcrumbs'
 import { CastCrewSection } from './CastCrewSection'
 import { FilmBanner } from './FilmBanner'
 import { FilmPosterMeta } from './FilmPosterMeta'
@@ -24,6 +25,10 @@ export function FilmDetailPage({
 
       {/* Main content area */}
       <div className="container mx-auto px-4 py-8">
+        <Breadcrumbs
+          items={[{ label: 'Films', href: '/films' }, { label: film.title }]}
+        />
+
         <div className="film-detail-grid">
           <FilmPosterMeta
             film={film}

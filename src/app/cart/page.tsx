@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -58,6 +59,20 @@ export default function CartPage({ searchParams }: CartPageProps) {
       />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs
+          items={[
+            { label: 'Films', href: '/films' },
+            { label: movieData.title, href: `/film/${movieData.id}` },
+            {
+              label: 'Purchase Tickets',
+              href: `/purchase?movieId=${
+                movieData.id
+              }&title=${encodeURIComponent(movieData.title)}`,
+            },
+            { label: 'Cart' },
+          ]}
+        />
+
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Cart Items */}

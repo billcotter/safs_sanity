@@ -3,7 +3,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { tmdbService } from '@/lib/tmdb'
+
 import { Award, Film, Star } from 'lucide-react'
 import Link from 'next/link'
 
@@ -41,7 +41,7 @@ export function PersonFilmography({
               <div className="aspect-[2/3] bg-gradient-to-br from-ocean-blue/10 to-terracotta/10 rounded-lg mb-3 flex items-center justify-center">
                 {movie.poster_path ? (
                   <img
-                    src={tmdbService.getPosterUrl(movie.poster_path, 'w185')}
+                    src={movie.poster_path || '/placeholder-poster.jpg'}
                     alt={movie.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
@@ -70,7 +70,7 @@ export function PersonFilmography({
 
                 {movie.release_date && (
                   <span className="text-xs text-charcoal-light">
-                    {tmdbService.getYearFromDate(movie.release_date)}
+                    {new Date(movie.release_date).getFullYear()}
                   </span>
                 )}
               </div>
@@ -94,7 +94,7 @@ export function PersonFilmography({
               <div className="w-16 h-24 bg-gradient-to-br from-ocean-blue/10 to-terracotta/10 rounded flex items-center justify-center flex-shrink-0">
                 {movie.poster_path ? (
                   <img
-                    src={tmdbService.getPosterUrl(movie.poster_path, 'w92')}
+                    src={movie.poster_path || '/placeholder-poster.jpg'}
                     alt={movie.title}
                     className="w-full h-full object-cover rounded"
                   />
@@ -121,7 +121,7 @@ export function PersonFilmography({
 
                     {movie.release_date && (
                       <span className="text-xs text-charcoal-light">
-                        {tmdbService.getYearFromDate(movie.release_date)}
+                        {new Date(movie.release_date).getFullYear()}
                       </span>
                     )}
                   </div>

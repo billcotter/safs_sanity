@@ -83,7 +83,7 @@ async function FallbackHomePage() {
                   <Button
                     asChild
                     size="sm"
-                    className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark"
+                    className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold transition-colors duration-200"
                   >
                     <Link href="/purchase?film=parasite">Purchase Ticket</Link>
                   </Button>
@@ -134,7 +134,7 @@ async function FallbackHomePage() {
                   <Button
                     asChild
                     size="sm"
-                    className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark"
+                    className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold transition-colors duration-200"
                   >
                     <Link href="/purchase?film=the-french-dispatch">
                       Purchase Ticket
@@ -185,7 +185,7 @@ async function FallbackHomePage() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-ocean-blue hover:bg-ocean-blue-dark"
+                  className="bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold transition-colors duration-200"
                 >
                   <Link href="/membership">
                     <Users className="mr-2 h-5 w-5" />
@@ -355,7 +355,7 @@ export default async function Page({ params }: PageProps) {
                     <Button
                       asChild
                       size="sm"
-                      className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark"
+                      className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold transition-colors duration-200"
                     >
                       <Link href="/purchase?film=parasite">
                         Purchase Ticket
@@ -408,7 +408,7 @@ export default async function Page({ params }: PageProps) {
                     <Button
                       asChild
                       size="sm"
-                      className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark"
+                      className="flex-1 bg-ocean-blue hover:bg-ocean-blue-dark text-sandstone font-semibold transition-colors duration-200"
                     >
                       <Link href="/purchase?film=grand-budapest-hotel">
                         Purchase Ticket

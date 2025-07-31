@@ -44,6 +44,80 @@ export default defineType({
       description: 'Will auto-populate from TMDB if left empty',
       rows: 4,
     }),
+    defineField({
+      name: 'releaseYear',
+      title: 'Release Year',
+      type: 'number',
+      description: 'Year the film was released',
+    }),
+    defineField({
+      name: 'runtime',
+      title: 'Runtime (minutes)',
+      type: 'number',
+      description: 'Film duration in minutes',
+    }),
+    defineField({
+      name: 'genres',
+      title: 'Genres',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Film genres',
+    }),
+    defineField({
+      name: 'rating',
+      title: 'Content Rating',
+      type: 'string',
+      description: 'MPAA rating or similar',
+    }),
+    defineField({
+      name: 'imdbRating',
+      title: 'IMDB Rating',
+      type: 'number',
+      description: 'IMDB rating out of 10',
+    }),
+    // Person references
+    defineField({
+      name: 'directors',
+      title: 'Directors',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Film directors',
+    }),
+    defineField({
+      name: 'actors',
+      title: 'Actors',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Main actors and actresses',
+    }),
+    defineField({
+      name: 'writers',
+      title: 'Writers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Screenwriters and script writers',
+    }),
+    defineField({
+      name: 'cinematographers',
+      title: 'Cinematographers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Director of photography',
+    }),
+    defineField({
+      name: 'producers',
+      title: 'Producers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Film producers',
+    }),
+    defineField({
+      name: 'composers',
+      title: 'Composers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'person' }] }],
+      description: 'Music composers',
+    }),
     // SAFS-specific fields
     defineField({
       name: 'memberNotes',
@@ -72,11 +146,16 @@ export default defineType({
       title: 'title',
       media: 'poster',
       tmdbId: 'tmdbId',
+      directors: 'directors',
     },
-    prepare({ title, media, tmdbId }) {
+    prepare({ title, media, tmdbId, directors }) {
+      const directorNames =
+        directors?.map((d: any) => d.name).join(', ') || 'No director'
       return {
         title: title || 'Untitled Film',
-        subtitle: tmdbId ? `TMDB ID: ${tmdbId}` : 'No TMDB ID',
+        subtitle: `${directorNames} • ${
+          tmdbId ? `TMDB ID: ${tmdbId}` : 'No TMDB ID'
+        }`,
         media,
       }
     },

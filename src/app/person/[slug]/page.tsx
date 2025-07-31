@@ -1,5 +1,5 @@
 import { PersonDetailPage } from '@/components/PersonDetailPage'
-import { tmdbService } from '@/lib/tmdb'
+
 import { notFound } from 'next/navigation'
 
 interface PersonDetailPageProps {
@@ -148,21 +148,14 @@ export default async function PersonDetailPageRoute({
     notFound()
   }
 
-  // Enrich with TMDB data if we have a TMDB ID
+  // For now, we'll use mock TMDB data
   let tmdbData = null
   if (person.id && person.id < 1000000) {
-    // Only try TMDB for real IDs
-    try {
-      const personDetails = await tmdbService.getPersonDetails(person.id)
-      const personCredits = await tmdbService.getPersonCredits(person.id)
-
-      tmdbData = {
-        ...personDetails,
-        known_for: personCredits.cast.slice(0, 10),
-        crew: personCredits.crew.slice(0, 5),
-      }
-    } catch (error) {
-      console.error('Error fetching TMDB person data:', error)
+    // Mock TMDB data
+    tmdbData = {
+      ...person,
+      known_for: [],
+      crew: [],
     }
   }
 

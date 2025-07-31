@@ -1,6 +1,6 @@
 import { FilmDetailPage } from '@/components/FilmDetailPage'
 import { client } from '@/lib/sanity'
-import { tmdbService } from '@/lib/tmdb'
+
 import { notFound } from 'next/navigation'
 
 interface FilmDetailPageProps {
@@ -296,26 +296,19 @@ export default async function FilmDetailPageRoute({
     notFound()
   }
 
-  // Enrich with TMDB data if available
+  // For now, we'll use mock TMDB data
   let tmdbData = null
   if (film.tmdbId) {
-    try {
-      const movieDetails = await tmdbService.getMovieDetails(film.tmdbId)
-      const credits = (await tmdbService.getMovieCredits(film.tmdbId)) as any
-      const videos = (await tmdbService.getMovieVideos(film.tmdbId)) as any
-
-      tmdbData = {
-        plot: movieDetails.overview,
-        cast: credits.cast.slice(0, 6),
-        director: credits.crew.find((p: any) => p.job === 'Director'),
-        trailer: videos.results.find((v: any) => v.type === 'Trailer'),
-        rating: movieDetails.vote_average,
-        runtime: movieDetails.runtime,
-        poster: movieDetails.poster_path,
-        backdrop: movieDetails.backdrop_path,
-      }
-    } catch (error) {
-      console.error('Error fetching TMDB data:', error)
+    // Mock TMDB data
+    tmdbData = {
+      plot: film.synopsis,
+      cast: [],
+      director: null,
+      trailer: null,
+      rating: 8.5,
+      runtime: film.runtime,
+      poster: film.poster,
+      backdrop: film.poster,
     }
   } else {
     // Provide mock cast data for films without TMDB IDs

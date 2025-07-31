@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -34,6 +35,26 @@ export default function CheckoutPage({ searchParams }: CheckoutPageProps) {
       <PageBanner title="Checkout" subtitle="Complete your purchase securely" />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs
+          items={[
+            { label: 'Films', href: '/films' },
+            { label: title, href: `/film/${movieId}` },
+            {
+              label: 'Purchase Tickets',
+              href: `/purchase?movieId=${movieId}&title=${encodeURIComponent(
+                title
+              )}`,
+            },
+            {
+              label: 'Cart',
+              href: `/cart?movieId=${movieId}&title=${encodeURIComponent(
+                title
+              )}`,
+            },
+            { label: 'Checkout' },
+          ]}
+        />
+
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Payment Form */}

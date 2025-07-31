@@ -3,7 +3,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { tmdbService } from '@/lib/tmdb'
+
 import { Award, Star, Users } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -49,14 +49,7 @@ export function CastCrewSection({ cast, director }: CastCrewSectionProps) {
                 <div className="w-20 h-20 bg-ocean-blue/20 rounded-full flex items-center justify-center mx-auto mb-3 hover:bg-ocean-blue/30 transition-colors cursor-pointer border-2 border-ocean-blue/30 hover:border-ocean-blue/50">
                   {director.profile_path ? (
                     <img
-                      src={
-                        director.profile_path.startsWith('http')
-                          ? tmdbService.getProfileUrl(
-                              director.profile_path,
-                              'w185'
-                            )
-                          : director.profile_path
-                      }
+                      src={director.profile_path || '/placeholder-profile.jpg'}
                       alt={director.name}
                       className="w-full h-full rounded-full object-cover"
                     />
@@ -117,14 +110,7 @@ export function CastCrewSection({ cast, director }: CastCrewSectionProps) {
                 <div className="w-20 h-20 bg-terracotta/20 rounded-full flex items-center justify-center mx-auto mb-3 hover:bg-terracotta/30 transition-colors cursor-pointer border-2 border-terracotta/30 hover:border-terracotta/50">
                   {member.profile_path ? (
                     <img
-                      src={
-                        member.profile_path.startsWith('http')
-                          ? tmdbService.getProfileUrl(
-                              member.profile_path,
-                              'w185'
-                            )
-                          : member.profile_path
-                      }
+                      src={member.profile_path || '/placeholder-profile.jpg'}
                       alt={member.name}
                       className="w-full h-full rounded-full object-cover"
                     />
@@ -185,14 +171,7 @@ export function CastCrewSection({ cast, director }: CastCrewSectionProps) {
                     <div className="w-12 h-12 bg-ocean-blue/20 rounded-full flex items-center justify-center mx-auto mb-2 hover:bg-ocean-blue/30 transition-colors cursor-pointer border border-ocean-blue/30 hover:border-ocean-blue/50">
                       {member.profile_path ? (
                         <img
-                          src={
-                            member.profile_path.startsWith('http')
-                              ? tmdbService.getProfileUrl(
-                                  member.profile_path,
-                                  'w92'
-                                )
-                              : member.profile_path
-                          }
+                          src={member.profile_path || '/placeholder-profile.jpg'}
                           alt={member.name}
                           className="w-full h-full rounded-full object-cover"
                         />

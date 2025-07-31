@@ -1,5 +1,6 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { Providers } from '@/components/Providers'
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${playfair.className}`}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-1 bg-sandstone">{children}</main>
-          <Footer />
-        </div>
+        <Providers>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 bg-sandstone">{children}</main>
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   )

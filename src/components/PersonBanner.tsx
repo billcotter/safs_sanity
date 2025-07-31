@@ -1,6 +1,6 @@
 'use client'
 
-import { tmdbService } from '@/lib/tmdb'
+
 import { Calendar, MapPin, Star, Users } from 'lucide-react'
 
 interface PersonBannerProps {
@@ -13,7 +13,7 @@ export function PersonBanner({ person, tmdbData }: PersonBannerProps) {
   let backgroundImage = '/api/placeholder/1920/600'
 
   if (tmdbData?.profile_path) {
-    backgroundImage = tmdbService.getProfileUrl(tmdbData.profile_path, 'w1280')
+    backgroundImage = tmdbData.profile_path || '/placeholder-backdrop.jpg'
   } else if (person.profile_path && person.profile_path.startsWith('http')) {
     backgroundImage = person.profile_path
   }
@@ -60,7 +60,7 @@ export function PersonBanner({ person, tmdbData }: PersonBannerProps) {
               {person.birthday && (
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span>{tmdbService.formatBirthday(person.birthday)}</span>
+                  <span>{new Date(person.birthday).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                 </div>
               )}
 

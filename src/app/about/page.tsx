@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Calendar, Film, MapPin, Users } from 'lucide-react'
@@ -53,6 +54,8 @@ export default function AboutPage() {
       </div>
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs items={[{ label: 'About' }]} />
+
         {/* Mission Statement with St. Augustine Street Image */}
         <div className="mb-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

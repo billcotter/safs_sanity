@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -13,6 +14,8 @@ export default function DonationsPage() {
       />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs items={[{ label: 'Donations' }]} />
+
         {/* Impact Statement - Strapi Content */}
         <div className="mb-12 p-8 bg-sandstone/30 rounded-lg shadow-sm">
           <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">

@@ -18,7 +18,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const menuItems = [
-    { href: '/current-films', label: 'Current Films' },
+    { href: '/films', label: 'Now Playing' },
     { href: '/events', label: 'Events' },
     { href: '/archive', label: 'Archive' },
     { href: '/about', label: 'About' },

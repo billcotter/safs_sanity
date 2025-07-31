@@ -1,3 +1,4 @@
+import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { PageBanner } from '@/components/PageBanner'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -37,6 +38,32 @@ export default function ThankYouPage({ searchParams }: ThankYouPageProps) {
       />
 
       <div className="container mx-auto px-4 py-12">
+        <Breadcrumbs
+          items={[
+            { label: 'Films', href: '/films' },
+            { label: title, href: `/film/${movieId}` },
+            {
+              label: 'Purchase Tickets',
+              href: `/purchase?movieId=${movieId}&title=${encodeURIComponent(
+                title
+              )}`,
+            },
+            {
+              label: 'Cart',
+              href: `/cart?movieId=${movieId}&title=${encodeURIComponent(
+                title
+              )}`,
+            },
+            {
+              label: 'Checkout',
+              href: `/checkout?movieId=${movieId}&title=${encodeURIComponent(
+                title
+              )}`,
+            },
+            { label: 'Thank You' },
+          ]}
+        />
+
         <div className="max-w-2xl mx-auto">
           {/* Success Message */}
           <Card className="mb-8 border-2 border-green-200 bg-green-50">
