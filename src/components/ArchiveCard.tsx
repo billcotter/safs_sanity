@@ -1,8 +1,8 @@
-import { urlForImage } from '@/sanity/lib/image'
-import { Button } from '@/components/ui/safs-button'
-import { Archive, Calendar, Film, MapPin, Users } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { urlForImage } from '@/sanity/lib/image';
+import { Button } from '@/components/ui/safs-button';
+import { Archive, Calendar, Film, MapPin, Users } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface ArchiveCardProps {
   screening: {
@@ -156,20 +156,20 @@ export function ArchiveCard({ screening }: ArchiveCardProps) {
         <div className='mt-4'>
           <div className='flex gap-2'>
             <Button
-              variant="secondary"
-              size="sm"
+              variant='secondary'
+              size='sm'
               icon={Film}
               href={`/films/${film.slug.current}`}
-              className="flex-1"
+              className='flex-1'
             >
               Film Details
             </Button>
             <Button
-              variant="outline"
-              size="sm"
+              variant='outline'
+              size='sm'
               icon={Calendar}
               href={`/events/${film.slug.current}`}
-              className="flex-1"
+              className='flex-1'
             >
               Film Event
             </Button>

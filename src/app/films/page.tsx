@@ -1,11 +1,11 @@
 import { Breadcrumbs } from '@/components/Breadcrumbs'
-import { PageBanner } from '@/components/PageBanner'
+import { FilmCardGrid } from '@/components/FilmCardGrid'
+import { PageLayout } from '@/components/PageLayout'
+import { UniversalBanner } from '@/components/UniversalBanner'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/safs-button'
 import { client } from '@/sanity/lib/client'
-import { urlForImage } from '@/sanity/lib/image'
-import { Calendar, Star, Ticket, Users } from 'lucide-react'
+import { Calendar, Users } from 'lucide-react'
 import Link from 'next/link'
 
 interface CurrentFilm {
@@ -112,214 +112,6 @@ async function getUpcomingFilms(): Promise<UpcomingFilm[]> {
   }
 }
 
-// Current Film Card Component
-function CurrentFilmCard({ film }: { film: CurrentFilm }) {
-  const nextScreening = film.upcomingScreenings[0]
-  const hasMultipleScreenings = film.upcomingScreenings.length > 1
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    })
-  }
-
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-    })
-  }
-
-  return (
-    <Card className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-      <div className="md:flex">
-        {/* Left Side: Poster */}
-        <div className="md:w-1/3">
-          <Link href={`/films/${film.slug.current}`}>
-            <div className="aspect-[2/3] relative group">
-              <img
-                src={
-                  film.poster
-                    ? urlForImage(film.poster).width(300).height(450).url()
-                    : '/placeholder-poster.jpg'
-                }
-                alt={film.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              {film.imdbRating && (
-                <div className="absolute top-2 right-2">
-                  <Badge className="bg-yellow-500 text-white flex items-center gap-1">
-                    <Star className="h-3 w-3" />
-                    {film.imdbRating.toFixed(1)}
-                  </Badge>
-                </div>
-              )}
-            </div>
-          </Link>
-        </div>
-
-        {/* Right Side: Content */}
-        <div className="md:w-2/3 p-6">
-          {/* Title and basic info */}
-          <div className="mb-4">
-            <h3 className="text-2xl font-bold text-charcoal mb-2">
-              <Link
-                href={`/films/${film.slug.current}`}
-                className="hover:text-ocean-blue transition-colors"
-              >
-                {film.title}
-              </Link>
-            </h3>
-            <div className="flex items-center gap-4 text-sm text-charcoal/70 mb-3">
-              <span>{film.releaseYear}</span>
-              <span>•</span>
-              <span>{film.runtime} min</span>
-              {film.rating && (
-                <>
-                  <span>•</span>
-                  <span>{film.rating}</span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Directors */}
-          {film.directors && film.directors.length > 0 && (
-            <div className="mb-3">
-              <p className="text-sm text-charcoal/70 mb-1">Directed by</p>
-              <div className="flex flex-wrap gap-2">
-                {film.directors.map((director) => (
-                  <Link
-                    key={director.slug.current}
-                    href={`/people/${director.slug.current}`}
-                    className="text-sm text-ocean-blue hover:underline"
-                  >
-                    {director.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Genres */}
-          {film.genres && film.genres.length > 0 && (
-            <div className="mb-3">
-              <div className="flex gap-1">
-                {film.genres.slice(0, 3).map((genre) => (
-                  <Badge key={genre} variant="outline" className="text-xs">
-                    {genre}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Synopsis */}
-          <p className="text-sm text-charcoal/70 mb-4 line-clamp-3">
-            {film.synopsis}
-          </p>
-
-          {/* Next Screening Section */}
-          {nextScreening && (
-            <div className="border-t pt-4">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="font-semibold text-charcoal">
-                    {formatDate(nextScreening.datetime)} at{' '}
-                    {formatTime(nextScreening.datetime)}
-                  </p>
-                  <Link
-                    href={`/venues/${nextScreening.venue.slug.current}`}
-                    className="text-sm text-ocean-blue hover:underline"
-                  >
-                    {nextScreening.venue.name}
-                  </Link>
-                </div>
-                <div className="text-right">
-                  {nextScreening.ticketPrice && (
-                    <p className="font-semibold text-charcoal">
-                      ${nextScreening.ticketPrice}
-                    </p>
-                  )}
-                  {nextScreening.soldOut ? (
-                    <Badge className="bg-red-500 text-white">Sold Out</Badge>
-                  ) : (
-                    <Button
-                      size="sm"
-                      className="bg-ocean-blue hover:bg-ocean-blue-dark"
-                    >
-                      <Ticket className="mr-1 h-3 w-3" />
-                      Get Tickets
-                    </Button>
-                  )}
-                </div>
-              </div>
-              {hasMultipleScreenings && (
-                <Link
-                  href={`/screenings?film=${film.slug.current}`}
-                  className="text-sm text-ocean-blue hover:underline"
-                >
-                  View all showtimes ({film.upcomingScreenings.length})
-                </Link>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-    </Card>
-  )
-}
-
-// Upcoming Film Card Component
-function UpcomingFilmCard({ film }: { film: UpcomingFilm }) {
-  return (
-    <Card className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="aspect-[2/3] relative">
-        <Link href={`/films/${film.slug.current}`}>
-          <img
-            src={
-              film.poster
-                ? urlForImage(film.poster).width(250).height(375).url()
-                : '/placeholder-poster.jpg'
-            }
-            alt={film.title}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-          />
-        </Link>
-        <Badge className="absolute top-2 left-2 bg-ocean-blue text-white">
-          Coming Soon
-        </Badge>
-      </div>
-
-      <div className="p-4">
-        <h3 className="text-sm font-semibold text-charcoal mb-1">
-          <Link
-            href={`/films/${film.slug.current}`}
-            className="hover:text-ocean-blue transition-colors"
-          >
-            {film.title}
-          </Link>
-        </h3>
-        <p className="text-xs text-charcoal/70 mb-2">{film.releaseYear}</p>
-        <p className="text-xs text-charcoal/70 line-clamp-2 mb-2">
-          {film.synopsis}
-        </p>
-        {film.nextScreening && (
-          <p className="text-xs text-ocean-blue">
-            {new Date(film.nextScreening.datetime).toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-            })}{' '}
-            at {film.nextScreening.venue.name}
-          </p>
-        )}
-      </div>
-    </Card>
-  )
-}
-
 interface FilmsPageProps {
   searchParams: Promise<{ country?: string; genre?: string }>
 }
@@ -353,14 +145,16 @@ export default async function FilmsPage({ searchParams }: FilmsPageProps) {
   const filteredCurrentFilms = filterFilms(currentFilms)
   const filteredUpcomingFilms = filterFilms(upcomingFilms)
 
+  // Extract screenings for current films
+  const currentScreenings = filteredCurrentFilms
+    .map((film) => film.upcomingScreenings?.[0] || null)
+    .filter(Boolean)
+
   return (
     <>
-      <PageBanner
-        title="Now Playing"
-        subtitle="Current and upcoming films at St. Augustine Film Society"
-      />
+      <UniversalBanner pageType="now-playing" />
 
-      <div className="container mx-auto px-4 py-8">
+      <PageLayout>
         <Breadcrumbs items={[{ label: 'Now Playing' }]} />
 
         {/* Filter Indicator */}
@@ -401,11 +195,11 @@ export default async function FilmsPage({ searchParams }: FilmsPageProps) {
             <h2 className="text-2xl font-serif font-bold text-charcoal mb-6">
               Currently Screening
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredCurrentFilms.map((film) => (
-                <CurrentFilmCard key={film._id} film={film} />
-              ))}
-            </div>
+            <FilmCardGrid
+              films={filteredCurrentFilms}
+              screenings={currentScreenings}
+              type="now-playing"
+            />
           </div>
         ) : (
           <div className="mb-12 text-center py-12">
@@ -441,11 +235,7 @@ export default async function FilmsPage({ searchParams }: FilmsPageProps) {
             <h2 className="text-2xl font-serif font-bold text-charcoal mb-6">
               Coming Soon
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filteredUpcomingFilms.map((film) => (
-                <UpcomingFilmCard key={film._id} film={film} />
-              ))}
-            </div>
+            <FilmCardGrid films={filteredUpcomingFilms} type="now-playing" />
           </div>
         )}
 
@@ -477,7 +267,7 @@ export default async function FilmsPage({ searchParams }: FilmsPageProps) {
             </Button>
           </div>
         </div>
-      </div>
+      </PageLayout>
     </>
   )
 }

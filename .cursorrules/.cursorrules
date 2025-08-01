@@ -1,0 +1,205 @@
+# St. Augustine Film Society - Cursor Development Rules
+
+## Core Development Principles
+
+- Follow ALL specifications in `./docs/technical-implementation.md`
+- Implement consistent design patterns from `./docs/design-system.md`
+- Maintain universal page layouts per `./docs/page-layouts.md`
+- NEVER deviate from established color palette and component structure
+
+## Technology Stack (STRICT)
+
+- **Framework**: NextJS 15 only
+- **CMS**: Sanity headless CMS
+- **API**: TMDB (The Movie Database)
+- **Database**: Supabase
+- **UI Components**: shadcn/ui components ONLY
+- **Icons**: Lucide React ONLY
+- **Styling**: Tailwind CSS with custom properties
+
+## Color System (MANDATORY)
+
+```
+Primary: Sandstone (#F4E4BC), Terracotta (#E07A5F), Ocean Blue (#3D5A80), Ochre (#F2CC8F), Charcoal (#2D3436)
+States: Error (#C0392B), Success (#27AE60), Warning (#F39C12), Focus (#4C8EF7)
+```
+
+- Use CSS custom properties: `var(--color-sandstone)` etc.
+- NEVER use hardcoded hex values in components
+- Always include hover states for interactive elements
+
+## Universal Requirements (NON-NEGOTIABLE)
+
+### Breadcrumb Implementation
+
+- MUST be placed between navigation and page banner
+- Height: 48px fixed, sticky positioning: `top-[80px]`
+- Use exact component from technical-implementation.md
+- Follow breadcrumb patterns: Home > Section > Detail
+
+### Error Handling (REQUIRED)
+
+- ALL API calls must include try/catch with fallbacks
+- ALL images must have onError handlers with fallback images
+- ALL components must have loading skeleton states
+- Use retry logic with exponential backoff (3 attempts max)
+
+### Accessibility (MANDATORY)
+
+- Every interactive element needs focus indicators
+- All images require meaningful alt text
+- Include screen reader content with `<span className="sr-only">`
+- Maintain proper heading hierarchy (h1 > h2 > h3)
+- Skip links for keyboard navigation
+
+### Performance (STRICT)
+
+- Use Next.js Image component for ALL images
+- Implement lazy loading for non-critical content
+- Include proper sizes attribute for responsive images
+- Cache API responses using provided cache utility
+
+## Component Development Rules
+
+### Film Cards
+
+- Use EXACT FilmCard component from technical-implementation.md
+- Include error boundaries and loading states
+- Support both 'nowPlaying' and 'archive' types
+- Maintain 320x450px dimensions with responsive behavior
+
+### Page Banners
+
+- Use EXACT PageBanner component from technical-implementation.md
+- Always 60vh height with gradient overlay
+- Include fallback images for API failures
+- Support dynamic background loading with error handling
+
+### Image Management
+
+- St. Augustine images: use `getStAugustineImage()` utility
+- TMDB images: include fallback handling
+- Organize files per structure in technical-implementation.md
+- Use WebP/AVIF formats with JPEG fallbacks
+
+## File Structure (ENFORCE)
+
+```
+components/
+├── accessibility/ (ScreenReaderOnly, SkipLink)
+├── skeletons/ (CardSkeleton, BannerSkeleton)
+├── Breadcrumb.jsx
+├── FilmCard.jsx
+├── PageBanner.jsx
+
+lib/
+├── cache.js
+├── secureApiClient.js
+├── staugustineImages.js
+
+utils/
+├── apiHandlers.js
+├── breadcrumbs.js
+```
+
+## Code Quality Standards
+
+### Import Organization
+
+```javascript
+// 1. React/Next imports
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+// 2. Third-party libraries
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+// 3. Icons
+import { Star, Film, Ticket } from 'lucide-react'
+
+// 4. Local components and utilities
+import { CardSkeleton } from '@/components/skeletons/CardSkeleton'
+import { cn } from '@/lib/utils'
+```
+
+### Error Handling Pattern (REQUIRED)
+
+```javascript
+// ALWAYS use this pattern for API calls
+try {
+  const data = await apiCall()
+  // Handle success
+} catch (error) {
+  console.error('Specific operation failed:', error)
+  // Use fallback data
+  // Show user-friendly error message
+  // Retry if appropriate
+}
+```
+
+### Loading States (MANDATORY)
+
+```javascript
+// ALWAYS implement loading states
+if (isLoading) return <ComponentSkeleton />
+if (error) return <ErrorFallback />
+return <ActualComponent />
+```
+
+## Security Requirements (STRICT)
+
+- NEVER expose API keys in client-side code
+- Use SecureApiClient from technical-implementation.md
+- Server-side API calls only for sensitive operations
+- Sanitize all user inputs
+- Implement proper CORS headers
+
+## Testing Requirements
+
+- Unit tests for all utility functions
+- Error boundary testing for all components
+- Accessibility testing with screen readers
+- Performance testing for page load times under 3 seconds
+
+## Forbidden Practices (NEVER DO)
+
+- ❌ Direct hex color values in components
+- ❌ Inline styles instead of Tailwind classes
+- ❌ API keys in client-side code
+- ❌ Images without error handling
+- ❌ Components without loading states
+- ❌ Missing accessibility attributes
+- ❌ Hardcoded image paths without fallbacks
+- ❌ Non-responsive design implementations
+
+## Required Checks Before Implementation
+
+- [ ] Component includes error boundaries
+- [ ] Loading skeleton implemented
+- [ ] Accessibility attributes added
+- [ ] Focus management implemented
+- [ ] Error handling with fallbacks
+- [ ] Responsive design verified
+- [ ] Performance optimizations applied
+- [ ] Security measures in place
+
+## Development Workflow
+
+1. Reference technical-implementation.md for exact code
+2. Implement component with all error handling
+3. Add loading states and skeletons
+4. Include accessibility features
+5. Test error scenarios and fallbacks
+6. Verify responsive behavior
+7. Check performance metrics
+
+## When in Doubt
+
+- Always refer to `./docs/technical-implementation.md` for complete examples
+- Follow the established patterns exactly as specified
+- Prioritize accessibility and error handling over visual flourishes
+- Ask for clarification rather than making assumptions
+
+Remember: The goal is a robust, accessible, performant film society website that handles all edge cases gracefully while maintaining visual consistency.

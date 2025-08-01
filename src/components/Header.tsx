@@ -24,6 +24,7 @@ export function Header() {
     { href: '/venues', label: 'Venues' },
     { href: '/about', label: 'About' },
     { href: '/membership', label: 'Membership' },
+    { href: '/sponsorship', label: 'Sponsorship' },
   ];
 
   return (
@@ -65,12 +66,9 @@ export function Header() {
             </NavigationMenu>
 
             {/* Auth Buttons */}
-            <div className='flex items-center space-x-4 ml-8'>
-              <Button href='/donations' variant='outline' size='sm'>
-                Donate
-              </Button>
-              <Button href='/login' variant='primary' size='sm'>
-                Login
+            <div className='flex items-center ml-8'>
+              <Button href='/signup' variant='primary' size='sm'>
+                Login | Signup
               </Button>
             </div>
           </nav>
@@ -120,12 +118,9 @@ export function Header() {
                   </nav>
 
                   {/* Mobile Auth Buttons */}
-                  <div className='border-t border-sandstone-dark/20 pt-6 space-y-3'>
-                    <Button href='/donations' variant='outline' fullWidth>
-                      Donate
-                    </Button>
-                    <Button href='/login' variant='primary' fullWidth>
-                      Login
+                  <div className='border-t border-sandstone-dark/20 pt-6'>
+                    <Button href='/signup' variant='primary' fullWidth>
+                      Login | Signup
                     </Button>
                   </div>
                 </div>

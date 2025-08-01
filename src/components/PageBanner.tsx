@@ -1,106 +1,130 @@
 'use client'
 
+import { Button } from '@/components/ui/safs-button'
 import { cn } from '@/lib/utils'
+import {
+  Award,
+  Calendar,
+  Film,
+  Heart,
+  LucideIcon,
+  MapPin,
+  Users,
+} from 'lucide-react'
+import Image from 'next/image'
 
-interface PageBannerProps {
-  title: string
-  subtitle?: string
-  backgroundImage?: string
-  announcement?: {
-    text: string
-    type?: 'info' | 'warning' | 'success'
-  }
-  strapiMessage?: string
+interface CTAButton {
+  text: string
+  href: string
+  variant?: 'primary' | 'secondary' | 'outline'
+  icon?: LucideIcon
   className?: string
 }
 
+interface PageBannerProps {
+  backgroundImage: string
+  backgroundAlt: string
+  title: string
+  subtitle?: string
+  ctaButtons?: CTAButton[]
+  className?: string
+  children?: React.ReactNode
+}
+
 export function PageBanner({
+  backgroundImage,
+  backgroundAlt,
   title,
   subtitle,
-  backgroundImage,
-  announcement,
-  strapiMessage,
+  ctaButtons = [],
   className,
+  children,
 }: PageBannerProps) {
-  const getAnnouncementStyles = (type?: string) => {
-    switch (type) {
-      case 'warning':
-        return 'bg-ochre/20 border-ochre text-ochre-dark'
-      case 'success':
-        return 'bg-ocean-blue/20 border-ocean-blue text-ocean-blue-dark'
-      default:
-        return 'bg-terracotta/20 border-terracotta text-terracotta-dark'
-    }
+  // Icon mapping for CTA buttons
+  const iconMap: Record<string, LucideIcon> = {
+    'View Films': Film,
+    'Purchase Tickets': Calendar,
+    'Browse Archive': Film,
+    'View Events': Calendar,
+    'Our Mission': Heart,
+    'Join Us': Users,
+    'View Locations': MapPin,
+    'Plan Your Visit': MapPin,
+    'View Plans': Award,
+    'Sign Up Today': Users,
+    'Sponsor Packages': Award,
+    'Contact Us': Users,
   }
 
-  return (
-    <>
-      <div
-        className={cn(
-          backgroundImage
-            ? 'relative bg-cover bg-center bg-no-repeat'
-            : 'bg-sandstone-dark border-b border-sandstone-dark/30',
-          className
-        )}
-        style={
-          backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
-        }
-      >
-        {backgroundImage && (
-          <div className="absolute inset-0 bg-black/50"></div>
-        )}
-        <div
-          className={cn(
-            'container mx-auto px-4 py-12',
-            backgroundImage ? 'relative z-10' : ''
-          )}
-        >
-          <div className="text-center">
-            <h1
-              className={cn(
-                'text-4xl md:text-5xl font-serif font-bold mb-4',
-                backgroundImage ? 'text-white' : 'text-charcoal'
-              )}
-            >
-              {title}
-            </h1>
-            {subtitle && (
-              <p
-                className={cn(
-                  'text-xl max-w-2xl mx-auto mb-8',
-                  backgroundImage ? 'text-white/90' : 'text-charcoal/80'
-                )}
-              >
-                {subtitle}
-              </p>
-            )}
+  // Add icons to buttons if not already present
+  const ctaButtonsWithIcons = ctaButtons.map((button) => ({
+    ...button,
+    icon: button.icon || iconMap[button.text],
+  }))
 
-            {announcement && (
-              <div
-                className={cn(
-                  'inline-block px-6 py-3 rounded-lg border-2 font-medium',
-                  getAnnouncementStyles(announcement.type)
-                )}
-              >
-                {announcement.text}
-              </div>
-            )}
-          </div>
-        </div>
+  return (
+    <section
+      className={cn('relative h-[60vh] w-full overflow-hidden', className)}
+    >
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src={backgroundImage}
+          alt={backgroundAlt}
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="100vw"
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/40 to-charcoal/30" />
       </div>
 
-      {/* Strapi Message Box */}
-      {strapiMessage && (
-        <div className="bg-sandstone/10 border-l-4 border-sandstone">
-          <div className="container mx-auto px-4 py-6">
-            <div className="max-w-4xl mx-auto">
-              <p className="text-charcoal/80 leading-relaxed">
-                {strapiMessage}
-              </p>
+      {/* Banner Content */}
+      <div className="relative z-10 flex h-full items-center justify-center">
+        <div className="text-center space-y-6 px-4 max-w-4xl mx-auto">
+          {/* Page Title */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-sandstone drop-shadow-lg">
+            {title}
+          </h1>
+
+          {/* Subtitle */}
+          {subtitle && (
+            <p className="text-lg md:text-xl text-sandstone/90 max-w-2xl mx-auto drop-shadow-md">
+              {subtitle}
+            </p>
+          )}
+
+          {/* CTA Buttons */}
+          {ctaButtonsWithIcons.length > 0 && (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+              {ctaButtonsWithIcons.map((button, index) => (
+                <Button
+                  key={index}
+                  variant={button.variant || 'secondary'}
+                  size="lg"
+                  icon={button.icon}
+                  href={button.href}
+                  className={cn(
+                    'min-w-[140px] shadow-lg',
+                    button.variant === 'primary'
+                      ? 'bg-terracotta hover:bg-terracotta/90 text-sandstone'
+                      : button.variant === 'outline'
+                      ? 'bg-transparent border-2 border-sandstone text-sandstone hover:bg-sandstone hover:text-charcoal'
+                      : 'bg-ocean-blue hover:bg-ocean-blue/90 text-sandstone',
+                    button.className
+                  )}
+                >
+                  {button.text}
+                </Button>
+              ))}
             </div>
-          </div>
+          )}
+
+          {/* Custom Content */}
+          {children}
         </div>
-      )}
-    </>
+      </div>
+    </section>
   )
 }

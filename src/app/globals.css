@@ -2,142 +2,158 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #f7f2e6;
-  --foreground: #333333;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
-.font-serif {
-  font-family: 'Playfair Display', Georgia, serif;
-}
-
-/* SAFS Color Palette */
 @layer base {
   :root {
-    --sandstone: #f7f2e6;
-    --sandstone-dark: #e8e0d0;
-    --charcoal: #333333;
-    --charcoal-light: #4a4a4a;
-    --ocean-blue: #2b5b7d;
-    --ocean-blue-dark: #1e3f5a;
-    --terracotta: #bf5b3d;
-    --terracotta-dark: #a04a2f;
-    --ochre: #e3a85b;
-    --cream: #fdfcf8;
-    
-    /* Radix UI Component Variables */
-    --background: #ffffff;
-    --foreground: #0c0a09;
-    --card: #ffffff;
-    --card-foreground: #0c0a09;
-    --popover: #ffffff;
-    --popover-foreground: #0c0a09;
-    --primary: #1c1917;
-    --primary-foreground: #fafaf9;
-    --secondary: #f5f5f4;
-    --secondary-foreground: #0c0a09;
-    --muted: #f5f5f4;
-    --muted-foreground: #78716c;
-    --accent: #f5f5f4;
-    --accent-foreground: #0c0a09;
-    --destructive: #ef4444;
-    --destructive-foreground: #fafaf9;
-    --border: #e7e5e4;
-    --input: #e7e5e4;
-    --ring: #0c0a09;
-    --radius: 0.5rem;
+    --color-sandstone: #f7f2e6;
+    --color-terracotta: #bf5b3d;
+    --color-ocean-blue: #2b5b7d;
+    --color-ochre: #e3a85b;
+    --color-charcoal: #333333;
+    --color-focus: #4c8ef7;
+    --color-disabled: #ced4da;
+  }
+
+  body {
+    @apply bg-sandstone text-charcoal;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  /* Typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+
+  .text-body {
+    @apply text-base leading-relaxed text-charcoal;
+  }
+
+  .text-small {
+    @apply text-sm leading-normal text-charcoal/80;
+  }
+
+  .text-caption {
+    @apply text-xs leading-tight text-charcoal/70;
   }
 }
 
-/* Film Detail Grid Layout */
 @layer components {
-  .film-detail-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 2rem;
-    grid-template-areas:
-      'poster plot'
-      'cast cast'
-      'trailer trailer';
+  /* Focus Management Styles */
+  .focus-visible {
+    @apply outline-2 outline-focus outline-offset-2 rounded;
   }
 
-  .poster-meta-column {
-    grid-area: poster;
+  /* Skip to content link */
+  .skip-link {
+    @apply absolute -top-10 left-6 bg-charcoal text-sandstone px-2 py-1 
+           no-underline rounded z-[1000] transition-all duration-300;
   }
 
-  .plot-synopsis-column {
-    grid-area: plot;
+  .skip-link:focus {
+    @apply top-6;
   }
 
-  .cast-crew-section {
-    grid-area: cast;
+  /* Screen reader only content */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden 
+           whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
   }
 
-  .trailer-section {
-    grid-area: trailer;
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-terracotta text-sandstone px-6 py-3 rounded-md font-medium 
+           transition-all duration-200 shadow-md hover:shadow-lg;
   }
 
-  /* Person Detail Grid Layout */
-  .person-detail-grid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2rem;
+  .btn-primary:hover {
+    @apply bg-terracotta-dark -translate-y-px;
   }
 
-  .person-bio-column {
-    grid-column: 1;
+  .btn-secondary {
+    @apply bg-transparent text-ocean-blue border-2 border-ocean-blue 
+           px-5 py-2.5 rounded-md font-medium transition-all duration-200;
   }
 
-  .person-filmography-column {
-    grid-column: 2;
+  .btn-secondary:hover {
+    @apply bg-ocean-blue text-sandstone;
   }
 
-  /* Responsive Grid Layout */
-  @media (max-width: 1023px) {
-    .film-detail-grid {
-      grid-template-columns: 250px 1fr;
-      grid-template-areas:
-        'poster plot'
-        'cast cast'
-        'trailer trailer';
-    }
-
-    .person-detail-grid {
-      grid-template-columns: 250px 1fr;
-    }
+  /* Badge Components */
+  .badge-genre {
+    @apply bg-ocean-blue text-sandstone px-2 py-1 rounded text-xs font-medium;
   }
 
-  @media (max-width: 767px) {
-    .film-detail-grid {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        'poster'
-        'plot'
-        'cast'
-        'trailer';
-    }
+  .badge-rating {
+    @apply bg-ochre text-charcoal px-2 py-1 rounded text-xs font-semibold;
+  }
 
-    .person-detail-grid {
-      grid-template-columns: 1fr;
-    }
+  /* Card Hover Effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
 
-    .person-bio-column {
-      grid-column: 1;
-    }
+  /* Image Hover Effects */
+  .image-hover {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
 
-    .person-filmography-column {
-      grid-column: 1;
-    }
+  /* Loading Animations */
+  .animate-pulse-slow {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Error States */
+  .error-state {
+    @apply border border-red-200 text-red-700;
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  .success-state {
+    @apply border border-green-200 text-green-700;
+    background-color: rgba(34, 197, 94, 0.1);
+  }
+
+  .warning-state {
+    @apply border border-yellow-200 text-yellow-700;
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+}
+
+@layer utilities {
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  /* Aspect ratio utilities */
+  .aspect-poster {
+    aspect-ratio: 2/3;
+  }
+
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
   }
 }
