@@ -320,11 +320,38 @@ function UpcomingFilmCard({ film }: { film: UpcomingFilm }) {
   )
 }
 
-export default async function FilmsPage() {
+interface FilmsPageProps {
+  searchParams: Promise<{ country?: string; genre?: string }>
+}
+
+export default async function FilmsPage({ searchParams }: FilmsPageProps) {
+  const params = await searchParams
+  const { country, genre } = params
+
   const [currentFilms, upcomingFilms] = await Promise.all([
     getCurrentFilms(),
     getUpcomingFilms(),
   ])
+
+  // Filter films based on query parameters
+  const filterFilms = (films: any[]) => {
+    return films.filter((film) => {
+      if (country && film.country) {
+        const filmCountry = film.country.toLowerCase().replace(/\s+/g, '-')
+        if (filmCountry !== country.toLowerCase()) return false
+      }
+      if (genre && film.genres) {
+        const filmGenres = film.genres.map((g: string) =>
+          g.toLowerCase().replace(/\s+/g, '-')
+        )
+        if (!filmGenres.includes(genre.toLowerCase())) return false
+      }
+      return true
+    })
+  }
+
+  const filteredCurrentFilms = filterFilms(currentFilms)
+  const filteredUpcomingFilms = filterFilms(upcomingFilms)
 
   return (
     <>
@@ -336,14 +363,46 @@ export default async function FilmsPage() {
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs items={[{ label: 'Now Playing' }]} />
 
+        {/* Filter Indicator */}
+        {(country || genre) && (
+          <div className="mb-6 p-4 bg-ocean-blue/10 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-charcoal">
+                  Filtered by:
+                </span>
+                {country && (
+                  <Badge variant="outline" className="bg-white">
+                    Country:{' '}
+                    {country
+                      .replace(/-/g, ' ')
+                      .replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </Badge>
+                )}
+                {genre && (
+                  <Badge variant="outline" className="bg-white">
+                    Genre:{' '}
+                    {genre
+                      .replace(/-/g, ' ')
+                      .replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </Badge>
+                )}
+              </div>
+              <Button asChild size="sm" variant="outline">
+                <Link href="/films">Clear Filters</Link>
+              </Button>
+            </div>
+          </div>
+        )}
+
         {/* Current Films Section */}
-        {currentFilms.length > 0 ? (
+        {filteredCurrentFilms.length > 0 ? (
           <div className="mb-12">
             <h2 className="text-2xl font-serif font-bold text-charcoal mb-6">
               Currently Screening
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {currentFilms.map((film) => (
+              {filteredCurrentFilms.map((film) => (
                 <CurrentFilmCard key={film._id} film={film} />
               ))}
             </div>
@@ -351,29 +410,39 @@ export default async function FilmsPage() {
         ) : (
           <div className="mb-12 text-center py-12">
             <h2 className="text-2xl font-serif font-bold text-charcoal mb-4">
-              No Films Currently Screening
+              {country || genre
+                ? 'No Films Match Your Filters'
+                : 'No Films Currently Screening'}
             </h2>
             <p className="text-charcoal/70 mb-6">
-              Check out our archive for past screenings or browse upcoming films
-              below.
+              {country || genre
+                ? 'Try adjusting your filters or browse all films.'
+                : 'Check out our archive for past screenings or browse upcoming films below.'}
             </p>
-            <Button asChild variant="outline">
-              <Link href="/archive">
-                <Calendar className="mr-2 h-4 w-4" />
-                View Archive
-              </Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {(country || genre) && (
+                <Button asChild variant="outline">
+                  <Link href="/films">View All Films</Link>
+                </Button>
+              )}
+              <Button asChild variant="outline">
+                <Link href="/archive">
+                  <Calendar className="mr-2 h-4 w-4" />
+                  View Archive
+                </Link>
+              </Button>
+            </div>
           </div>
         )}
 
         {/* Coming Soon Section */}
-        {upcomingFilms.length > 0 && (
+        {filteredUpcomingFilms.length > 0 && (
           <div className="mb-12">
             <h2 className="text-2xl font-serif font-bold text-charcoal mb-6">
               Coming Soon
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {upcomingFilms.map((film) => (
+              {filteredUpcomingFilms.map((film) => (
                 <UpcomingFilmCard key={film._id} film={film} />
               ))}
             </div>

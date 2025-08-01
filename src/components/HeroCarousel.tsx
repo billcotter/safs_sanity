@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/safs-button';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
-import { Clock, Info, MapPin, Star, Ticket } from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
+} from '@/components/ui/carousel';
+import { Clock, Info, MapPin, Star, Ticket } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 interface HeroMovie {
-  id: number
-  title: string
-  year: number
-  genre: string
-  director: string
-  country: string
-  runtime: string
-  rating: string
-  description: string
-  imageUrl: string
-  showingDate?: string
-  venue?: string
+  id: number;
+  title: string;
+  year: number;
+  genre: string;
+  director: string;
+  country: string;
+  runtime: string;
+  rating: string;
+  description: string;
+  imageUrl: string;
+  showingDate?: string;
+  venue?: string;
 }
 
 const heroMovies: HeroMovie[] = [
@@ -75,72 +75,74 @@ const heroMovies: HeroMovie[] = [
     showingDate: 'Sunday Matinee, 2:00 PM',
     venue: 'Lightner Museum',
   },
-]
+];
 
 // Function to create pretty URLs from film titles
 function slugifyTitle(title: string): string {
   return title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
+    .replace(/(^-|-$)/g, '');
 }
 
 export function HeroCarousel() {
-  const [api, setApi] = useState<any>()
+  const [api, setApi] = useState<any>();
 
   return (
-    <div className="relative bg-gradient-to-b from-charcoal to-charcoal-dark overflow-hidden">
+    <div className='relative bg-gradient-to-b from-charcoal to-charcoal-dark overflow-hidden'>
       {/* Hero Carousel */}
       <Carousel
         setApi={setApi}
-        className="w-full"
+        className='w-full'
         opts={{
           align: 'start',
           loop: true,
+          duration: 20,
+          interval: 5000,
         }}
       >
         <CarouselContent>
           {heroMovies.map((movie) => (
-            <CarouselItem key={movie.id} className="md:basis-1/1">
-              <div className="relative h-[70vh] min-h-[500px] overflow-hidden">
+            <CarouselItem key={movie.id} className='md:basis-1/1'>
+              <div className='relative h-[70vh] min-h-[500px] overflow-hidden'>
                 {/* Background Image */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  className='absolute inset-0 bg-cover bg-center bg-no-repeat'
                   style={{
                     backgroundImage: `url(${movie.imageUrl})`,
                   }}
                 />
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-transparent" />
+                <div className='absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-transparent' />
 
                 {/* Content */}
-                <div className="relative h-full flex items-center">
-                  <div className="container mx-auto px-4">
-                    <div className="max-w-4xl">
+                <div className='relative h-full flex items-center'>
+                  <div className='container mx-auto px-4'>
+                    <div className='max-w-4xl'>
                       {/* Movie Info */}
-                      <div className="mb-6">
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="flex items-center gap-2 bg-ocean-blue/20 backdrop-blur-sm rounded-full px-4 py-2">
-                            <Star className="h-4 w-4 text-yellow-400" />
-                            <span className="text-white font-semibold">
+                      <div className='mb-6'>
+                        <div className='flex items-center gap-4 mb-4'>
+                          <div className='flex items-center gap-2 bg-ocean-blue/20 backdrop-blur-sm rounded-full px-4 py-2'>
+                            <Star className='h-4 w-4 text-yellow-400' />
+                            <span className='text-white font-semibold'>
                               {movie.rating}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 bg-charcoal/50 backdrop-blur-sm rounded-full px-4 py-2">
-                            <Clock className="h-4 w-4 text-sandstone" />
-                            <span className="text-sandstone font-medium">
+                          <div className='flex items-center gap-2 bg-charcoal/50 backdrop-blur-sm rounded-full px-4 py-2'>
+                            <Clock className='h-4 w-4 text-sandstone' />
+                            <span className='text-sandstone font-medium'>
                               {movie.runtime}
                             </span>
                           </div>
                         </div>
 
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-4 leading-tight">
+                        <h1 className='text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-4 leading-tight'>
                           {movie.title}
                         </h1>
 
-                        <div className="flex flex-wrap items-center gap-4 mb-6 text-sandstone">
-                          <span className="font-medium">{movie.year}</span>
+                        <div className='flex flex-wrap items-center gap-4 mb-6 text-sandstone'>
+                          <span className='font-medium'>{movie.year}</span>
                           <span>•</span>
                           <span>{movie.genre}</span>
                           <span>•</span>
@@ -149,15 +151,15 @@ export function HeroCarousel() {
                           <span>{movie.country}</span>
                         </div>
 
-                        <p className="text-lg md:text-xl text-sandstone/90 max-w-2xl mb-8 leading-relaxed">
+                        <p className='text-lg md:text-xl text-sandstone/90 max-w-2xl mb-8 leading-relaxed'>
                           {movie.description}
                         </p>
 
                         {/* Showing Details */}
                         {movie.showingDate && movie.venue && (
-                          <div className="flex items-center gap-2 mb-8 text-sandstone">
-                            <MapPin className="h-5 w-5 text-ocean-blue" />
-                            <span className="font-medium">
+                          <div className='flex items-center gap-2 mb-8 text-sandstone'>
+                            <MapPin className='h-5 w-5 text-ocean-blue' />
+                            <span className='font-medium'>
                               {movie.showingDate}
                             </span>
                             <span>•</span>
@@ -166,45 +168,40 @@ export function HeroCarousel() {
                         )}
 
                         {/* Action Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <div className='flex flex-col sm:flex-row gap-4'>
                           <Button
-                            size="lg"
-                            className="bg-ocean-blue hover:bg-ocean-blue-dark text-white font-semibold px-8 py-3 rounded-lg transition-colors"
-                            asChild
+                            variant='primary'
+                            size='xl'
+                            icon={Ticket}
+                            href={`/purchase?movieId=${
+                              movie.id
+                            }&title=${encodeURIComponent(
+                              movie.title
+                            )}&poster=${encodeURIComponent(
+                              movie.imageUrl
+                            )}&date=${encodeURIComponent(
+                              movie.showingDate || ''
+                            )}&time=${encodeURIComponent(
+                              movie.showingDate || ''
+                            )}&venue=${encodeURIComponent(
+                              movie.venue || ''
+                            )}&rating=${encodeURIComponent(
+                              movie.rating
+                            )}&genre=${encodeURIComponent(
+                              movie.genre
+                            )}&runtime=${encodeURIComponent(movie.runtime)}`}
+                            className='font-semibold'
                           >
-                            <Link
-                              href={`/purchase?movieId=${
-                                movie.id
-                              }&title=${encodeURIComponent(
-                                movie.title
-                              )}&poster=${encodeURIComponent(
-                                movie.imageUrl
-                              )}&date=${encodeURIComponent(
-                                movie.showingDate || ''
-                              )}&time=${encodeURIComponent(
-                                movie.showingDate || ''
-                              )}&venue=${encodeURIComponent(
-                                movie.venue || ''
-                              )}&rating=${encodeURIComponent(
-                                movie.rating
-                              )}&genre=${encodeURIComponent(
-                                movie.genre
-                              )}&runtime=${encodeURIComponent(movie.runtime)}`}
-                            >
-                              <Ticket className="mr-2 h-5 w-5" />
-                              Purchase Ticket
-                            </Link>
+                            Buy Tickets
                           </Button>
                           <Button
-                            variant="outline"
-                            size="lg"
-                            className="border-sandstone text-sandstone hover:bg-sandstone hover:text-charcoal font-semibold px-8 py-3 rounded-lg transition-colors"
-                            asChild
+                            variant='accent'
+                            size='xl'
+                            icon={Info}
+                            href={`/films/${slugifyTitle(movie.title)}`}
+                            className='font-semibold'
                           >
-                            <Link href={`/film/${slugifyTitle(movie.title)}`}>
-                              <Info className="mr-2 h-5 w-5" />
-                              Details
-                            </Link>
+                            Film Details
                           </Button>
                         </div>
                       </div>
@@ -217,19 +214,19 @@ export function HeroCarousel() {
         </CarouselContent>
 
         {/* Navigation Arrows */}
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-charcoal/50 hover:bg-charcoal/70 border-charcoal-light text-white" />
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-charcoal/50 hover:bg-charcoal/70 border-charcoal-light text-white" />
+        <CarouselPrevious className='absolute left-4 top-1/2 -translate-y-1/2 bg-charcoal/50 hover:bg-charcoal/70 border-charcoal-light text-white' />
+        <CarouselNext className='absolute right-4 top-1/2 -translate-y-1/2 bg-charcoal/50 hover:bg-charcoal/70 border-charcoal-light text-white' />
       </Carousel>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex flex-col items-center text-sandstone/60">
-          <span className="text-sm mb-2">Scroll to explore</span>
-          <div className="w-6 h-10 border-2 border-sandstone/60 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-sandstone/60 rounded-full mt-2 animate-bounce"></div>
+      <div className='absolute bottom-8 left-1/2 -translate-x-1/2'>
+        <div className='flex flex-col items-center text-sandstone/60'>
+          <span className='text-sm mb-2'>Scroll to explore</span>
+          <div className='w-6 h-10 border-2 border-sandstone/60 rounded-full flex justify-center'>
+            <div className='w-1 h-3 bg-sandstone/60 rounded-full mt-2 animate-bounce'></div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
